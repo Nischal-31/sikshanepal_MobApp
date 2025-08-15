@@ -38,15 +38,17 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.flutter_dash, size: 100, color: Colors.white),
+              Image.asset(
+                'assets/images/sikshanepal.png',
+                width: 300,
+                height: 300,
+                color: Colors.white, // Optional if you want to tint it
+              ),
               SizedBox(height: 20),
-              Text(
-                'SikshaNepal',
-                style: TextStyle(
-                  fontSize: 28,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+              // Loading indicator instead of text
+              CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                strokeWidth: 4,
               ),
             ],
           ),

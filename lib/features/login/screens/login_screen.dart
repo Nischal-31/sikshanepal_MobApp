@@ -146,15 +146,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: 2,
                       ),
                     ),
-                    child: Icon(
-                      Icons.school_outlined,
-                      size: 80,
-                      color: Colors.white,
+                    child: Image.asset(
+                      'assets/images/sikshanepal.png',
+                      width: 100,
+                      height: 100,
+                      color: Colors.white, // Optional if you want to tint it
                     ),
                   ),
                   SizedBox(height: 24),
                   Text(
-                    'Sिक्षाNepal',
+                    'SikshaNepal',
                     style: TextStyle(
                       fontSize: 36,
                       color: Colors.white,
@@ -171,7 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Learn • Grow • Excel',
+                    'Learn • Grow • Enhance',
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.white.withOpacity(0.9),
@@ -415,7 +416,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   // Footer Text
                   Text(
-                    '© 2025 Sिक्षाNepal',
+                    '© 2026 SikshaNepal',
                     style: TextStyle(
                       color: Colors.white.withOpacity(0.7),
                       fontSize: 12,
