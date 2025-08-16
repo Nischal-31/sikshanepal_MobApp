@@ -5,6 +5,7 @@ import 'package:sikshanepal/features/contact/screens/contact_screen.dart';
 import 'package:sikshanepal/features/courses/screens/course_screen.dart';
 import 'package:sikshanepal/features/home/screens/home_screen.dart';
 import 'package:sikshanepal/features/login/screens/login_screen.dart';
+import 'package:sikshanepal/features/profile/screens/personalinfo_screen.dart';
 import 'package:sikshanepal/features/profile/screens/profile_screen.dart';
 import 'package:sikshanepal/features/splash/screens/splash_screen.dart';
 import 'package:sikshanepal/features/subscription/screens/subscription_screen.dart';
@@ -19,6 +20,8 @@ class AppRoutes {
   static const String contact = '/contact';
   static const String subscription = '/subscription';
   static const String profile = '/profile';
+  static const String personalinfo = '/personalinfo';
+  static const String profileupdate = '/profileupdate';
 
   static final Map<String, WidgetBuilder> routes = {
     splash: (context) => SplashScreen(),
@@ -30,5 +33,6 @@ class AppRoutes {
     contact: (context) => ContactScreen(),
     subscription: (context) => SubscriptionScreen(),
     profile: (context) => ProfileScreen(),
+    personalinfo: (context) => PersonalInfoScreen(),
   };
 }

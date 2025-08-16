@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sikshanepal/core/services/auth_service.dart';
+import 'package:sikshanepal/features/splash/widgets/splash_widgets.dart';
 import 'package:sikshanepal/routes/app_routes.dart';
 import 'dart:async';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -11,6 +12,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final AuthService _authService = AuthService(); // Instance of service
+
   @override
   void initState() {
     super.initState();
@@ -18,11 +21,9 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _checkLogin() async {
-    await Future.delayed(Duration(seconds: 3));
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('auth_token');
+    bool loggedIn = await _authService.isLoggedIn();
 
-    if (token != null && token.isNotEmpty) {
+    if (loggedIn) {
       Navigator.pushReplacementNamed(context, AppRoutes.home);
     } else {
       Navigator.pushReplacementNamed(context, AppRoutes.login);
@@ -31,29 +32,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: Colors.blueAccent,
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image.asset(
-                'assets/images/sikshanepal.png',
-                width: 300,
-                height: 300,
-                color: Colors.white, // Optional if you want to tint it
-              ),
-              SizedBox(height: 20),
-              // Loading indicator instead of text
-              CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                strokeWidth: 4,
-              ),
-            ],
-          ),
-        ),
-      ),
+    return const Scaffold(
+      body: SplashContent(),
+      backgroundColor: Colors.blueAccent, // Optional background color
     );
   }
 }

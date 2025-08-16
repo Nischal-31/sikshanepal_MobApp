@@ -99,7 +99,7 @@ class AboutScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 const Text(
-                  'About SikshNepal',
+                  'About SikshaNepal',
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,

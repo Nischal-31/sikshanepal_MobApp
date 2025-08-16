@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sikshanepal/features/profile/screens/personalinfo_screen.dart';
+import 'package:sikshanepal/models/user_model.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -123,9 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     SizedBox(height: 16),
                     ElevatedButton(
-                      onPressed: () {
-                        _showEditProfileDialog();
-                      },
+                      onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
                         foregroundColor: Colors.blue[600],
@@ -375,27 +375,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  void _showEditProfileDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Edit Profile'),
-        content: const Text(
-          'Profile editing functionality will be implemented here.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Close'),
-          ),
-        ],
-      ),
+  void _navigateToUpdateProfile(User user) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Edit Settings - Coming soon!')),
     );
   }
 
   void _navigateToPersonalInfo() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Personal Information page - Coming soon!')),
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const PersonalInfoScreen()),
     );
   }
 
