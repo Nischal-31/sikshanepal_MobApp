@@ -143,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     minHeight: 16,
                   ),
                   child: const Text(
-                    '3',
+                    '9+',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 10,
@@ -207,20 +207,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(width: 12),
                     const Text('Profile'),
-                  ],
-                ),
-              ),
-              PopupMenuItem<String>(
-                value: 'settings',
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.settings_outlined,
-                      color: Colors.grey[700],
-                      size: 20,
-                    ),
-                    const SizedBox(width: 12),
-                    const Text('Settings'),
                   ],
                 ),
               ),
@@ -295,8 +281,6 @@ class _HomeScreenState extends State<HomeScreen> {
             setState(() {
               _currentIndex = index;
             });
-
-            // Add haptic feedback
             HapticFeedback.lightImpact();
           },
           type: BottomNavigationBarType.fixed,
@@ -966,9 +950,11 @@ class HomeContentScreen extends StatelessWidget {
                 'JavaScript Quiz',
                 '3 days ago',
               ),
+              SizedBox(height: 20),
             ],
           ),
         ),
+        SizedBox(height: 16),
       ],
     );
   }

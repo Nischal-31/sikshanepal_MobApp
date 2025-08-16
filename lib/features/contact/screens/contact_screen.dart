@@ -550,7 +550,7 @@ class _ContactScreenState extends State<ContactScreen> {
                   },
                   borderRadius: BorderRadius.circular(16),
                   child: Container(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(
                       color: (social['color'] as Color?)?.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(16),
@@ -561,7 +561,7 @@ class _ContactScreenState extends State<ContactScreen> {
                         Icon(
                           social['icon'] as IconData,
                           color: social['color'] as Color?,
-                          size: 28,
+                          size: 24,
                         ),
                         const SizedBox(height: 8),
                         Text(
@@ -578,6 +578,16 @@ class _ContactScreenState extends State<ContactScreen> {
                 );
               }).toList(),
             ),
+            const SizedBox(height: 16),
+            const Text(
+              'Stay connected with us on social media for the latest updates and news.',
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.black54,
+                height: 1.4,
+              ),
+            ),
+            const SizedBox(height: 40),
           ],
         ),
       ),
