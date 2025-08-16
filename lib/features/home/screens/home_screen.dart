@@ -237,9 +237,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 case 'profile':
                   Navigator.pushNamed(context, '/profile');
                   break;
-                case 'settings':
-                  Navigator.pushNamed(context, '/settings');
-                  break;
                 case 'help':
                   Navigator.pushNamed(context, '/help');
                   break;
@@ -492,7 +489,7 @@ class HomeContentScreen extends StatelessWidget {
                 const Icon(Icons.school_rounded, color: Colors.white, size: 48),
                 const SizedBox(height: 16),
                 const Text(
-                  'Welcome to SikshNepal!',
+                  'Welcome to SikshaNepal!',
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,

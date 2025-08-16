@@ -16,7 +16,12 @@ class AboutScreen extends StatelessWidget {
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
-                  // Mission Section
+                  // Developers Section - MOVED TO FIRST
+                  _buildDevelopersSection(),
+
+                  const SizedBox(height: 32),
+
+                  // Mission Section - MOVED TO SECOND
                   _buildMissionSection(),
 
                   const SizedBox(height: 32),
@@ -31,7 +36,7 @@ class AboutScreen extends StatelessWidget {
 
                   const SizedBox(height: 32),
 
-                  // Team Section
+                  // Team Section (Values)
                   _buildTeamSection(),
 
                   const SizedBox(height: 32),
@@ -60,19 +65,16 @@ class AboutScreen extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          // Background Pattern
+          // Background Pattern - FIXED: Removed broken network image
           Positioned.fill(
             child: Opacity(
               opacity: 0.1,
               child: Container(
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(
-                      'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800',
-                    ),
-                    fit: BoxFit.cover,
-                  ),
+                decoration: BoxDecoration(
+                  // Using a geometric pattern instead of network image
+                  color: Colors.white.withOpacity(0.05),
                 ),
+                child: CustomPaint(painter: GeometricPatternPainter()),
               ),
             ),
           ),
@@ -120,6 +122,217 @@ class AboutScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildDevelopersSection() {
+    final developers = [
+      {
+        'name': 'Nischal Moktan',
+        'role': 'Lead Developer & Backend Developer',
+        'image': 'assets/images/nischal.jpg',
+        'bio':
+            'Passionate about creating modern and functional mobile applications with expertise in Flutter development.',
+        'skills': [
+          'Flutter',
+          'Python-Django',
+          'Full-Stack Developer',
+          'Firebase',
+        ],
+        'color': Colors.purple,
+      },
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.indigo[50],
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                Icons.code_rounded,
+                color: Colors.indigo[600],
+                size: 24,
+              ),
+            ),
+            const SizedBox(width: 16),
+            const Text(
+              'Developer',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 20),
+        ...developers
+            .map(
+              (dev) => _buildDeveloperCard(
+                dev['name'] as String,
+                dev['role'] as String,
+                dev['image'] as String,
+                dev['bio'] as String,
+                dev['skills'] as List<String>,
+                dev['color'] as Color,
+              ),
+            )
+            .toList(),
+      ],
+    );
+  }
+
+  Widget _buildDeveloperCard(
+    String name,
+    String role,
+    String imageUrl,
+    String bio,
+    List<String> skills,
+    Color accentColor,
+  ) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      child: Card(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(color: Colors.grey.shade200),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 80,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: accentColor.withOpacity(0.3),
+                        width: 3,
+                      ),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(14),
+                      child: imageUrl.startsWith('assets/')
+                          ? Image.asset(
+                              imageUrl,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Container(
+                                  color: accentColor.withOpacity(0.1),
+                                  child: Icon(
+                                    Icons.person,
+                                    size: 40,
+                                    color: accentColor,
+                                  ),
+                                );
+                              },
+                            )
+                          : Image.network(
+                              imageUrl,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Container(
+                                  color: accentColor.withOpacity(0.1),
+                                  child: Icon(
+                                    Icons.person,
+                                    size: 40,
+                                    color: accentColor,
+                                  ),
+                                );
+                              },
+                            ),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          name,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: accentColor.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            role,
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: accentColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              Text(
+                bio,
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.grey[600],
+                  height: 1.5,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: skills.map((skill) {
+                    return Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[100],
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: Colors.grey[300]!),
+                      ),
+                      child: Text(
+                        skill,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey[700],
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -509,4 +722,37 @@ class AboutScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+// Custom painter for geometric background pattern
+class GeometricPatternPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.white.withOpacity(0.1)
+      ..strokeWidth = 1
+      ..style = PaintingStyle.stroke;
+
+    const spacing = 40.0;
+
+    // Draw diagonal lines
+    for (double i = -size.height; i < size.width + size.height; i += spacing) {
+      canvas.drawLine(
+        Offset(i, 0),
+        Offset(i + size.height, size.height),
+        paint,
+      );
+    }
+
+    for (double i = size.width + size.height; i > -size.height; i -= spacing) {
+      canvas.drawLine(
+        Offset(i, 0),
+        Offset(i - size.height, size.height),
+        paint,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

@@ -1,9 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+Future<Map<String, dynamic>?> getUserFromPrefs() async {
+  final prefs = await SharedPreferences.getInstance();
+  final userString = prefs.getString('user');
+  if (userString == null) return null;
+  return json.decode(userString);
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
@@ -66,23 +76,52 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    const Text(
-                      'Nischal Moktan',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                    FutureBuilder(
+                      future: getUserFromPrefs(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator(
+                            color: Colors.white,
+                          );
+                        } else if (snapshot.hasError || !snapshot.hasData) {
+                          return const Text(
+                            'Guest',
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          );
+                        } else {
+                          final user = snapshot.data!;
+                          print("ProfileScreen user: $user");
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                user['username'], // dynamic username
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                user['email'], // dynamic email
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white.withOpacity(0.9),
+                                ),
+                              ),
+                            ],
+                          );
+                        }
+                      },
                     ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'xxx@example.com',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white.withOpacity(0.9),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
+
+                    SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: () {
                         _showEditProfileDialog();

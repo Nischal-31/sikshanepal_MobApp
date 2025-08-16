@@ -43,6 +43,16 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
+  void logStoredData() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Get everything stored
+    final keys = prefs.getKeys();
+    for (var key in keys) {
+      print("$key: ${prefs.get(key)}");
+    }
+  }
+
   Future<void> _login() async {
     // Validate input fields
     if (_usernameController.text.trim().isEmpty ||
@@ -74,9 +84,13 @@ class _LoginScreenState extends State<LoginScreen> {
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         String token = data['token'];
+        Map<String, dynamic> user = data['user'];
 
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('auth_token', token);
+        await prefs.setString('user', json.encode(user)); // Save user info
+
+        logStoredData();
 
         // Navigate to home and clear navigation stack
         Navigator.of(context).pushNamedAndRemoveUntil(
